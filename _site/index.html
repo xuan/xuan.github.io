@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Raspberry &middot; Xuan Nguyen IOS Blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Raspberry</a>
+          <small>Xuan Nguyen IOS Blog</small>
+        </h3>
+      </div>
+
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/15/terminal-history/">
+        Adding search history in terminal with your up arrow
+      </a>
+    </h1>
+
+    <span class="post-date">15 Mar 2014</span>
+
+    <p>Create a file in your home directory called <strong>.inputrc</strong> and add the following contents:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nb">cd</span> ~
+nano .inputrc
+</code></pre></div>
+
+<p>Paste in the following contents:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="c">## arrow up</span>
+<span class="s2">&quot;\e[A&quot;</span>:history-search-backward
+<span class="c">## arrow down</span>
+<span class="s2">&quot;\e[B&quot;</span>:history-search-forward
+</code></pre></div>
+
+<p>Save the file and restart your terminal.  You can now search for your previous commands by typing the first 2 letters followed by an up arrow key.  You can then scroll through your history by tapping the up arrow key.</p>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    <span class="pagination-item newer">Newer</span>
+  
+</div>
+
+      <div class="footer">
+        <p>
+          &copy; 2014. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>

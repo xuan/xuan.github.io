@@ -1,0 +1,24 @@
+# Dependencies
+markdown:         redcarpet
+pygments:         true
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            Raspberry
+tagline:          'Xuan Nguyen IOS Blog'
+description:      'IOS Development'
+url:              http://www.rsbry.com
+
+author:
+  name:           'Xuan Nguyen'
+  url:            https://www.rsbry.com
+
+paginate:         1
+
+# Custom vars
+version:          1.0.0
+
+github:
+  repo:           https://github.com/xuan
