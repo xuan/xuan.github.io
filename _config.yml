@@ -13,7 +13,7 @@ url:              http://www.rsbry.com
 
 author:
   name:           'Xuan Nguyen'
-  url:            https://www.rsbry.com
+  url:            http://www.rsbry.com
 
 paginate:         1
 
@@ -22,3 +22,9 @@ version:          1.0.0
 
 github:
   repo:           https://github.com/xuan
+
+
+pages_list:       
+  About: '/about'
+  Archive: '/archive'
+  Feed: '/atom.xml'
