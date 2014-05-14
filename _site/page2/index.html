@@ -10,7 +10,7 @@
 
   <title>
     
-      Archive &middot; Raspberry
+      Raspberry &middot; Xuan Nguyen IOS Blog
     
   </title>
 
@@ -55,17 +55,43 @@
         </h3>
       </div>
 
-      <div class="page">
-  <h1 class="page-title">Archive</h1>
-  <h1>Blog Posts</h1>
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/15/terminal-history/">
+        Adding search history in terminal with your up arrow
+      </a>
+    </h1>
 
-<ul>
-<li><p>31 Mar 2014 &raquo; <a href="/2014/03/31/animate-pie-chart/"> IOS - Animating a Pie Chart using CALayer </a></p></li>
-<li><p>15 Mar 2014 &raquo; <a href="/2014/03/15/terminal-history/"> Adding search history in terminal with your up arrow </a></p></li>
-</ul>
+    <span class="post-date">15 Mar 2014</span>
 
+    <p>Create a file in your home directory called <strong>.inputrc</strong> and add the following contents:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nb">cd</span> ~
+nano .inputrc
+</code></pre></div>
+<p>Paste in the following contents:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="c">## arrow up</span>
+<span class="s2">&quot;\e[A&quot;</span>:history-search-backward
+<span class="c">## arrow down</span>
+<span class="s2">&quot;\e[B&quot;</span>:history-search-forward
+</code></pre></div>
+<p>Save the file and restart your terminal.  You can now search for your previous commands by typing the first 2 letters followed by an up arrow key.  You can then scroll through your history by tapping the up arrow key.</p>
+
+  </div>
+  
 </div>
 
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/">Newer</a>
+    
+  
+</div>
 
       <!-- Add Disqus comments. -->
 <div id="disqus_thread"></div>
