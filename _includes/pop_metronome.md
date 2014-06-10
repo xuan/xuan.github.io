@@ -27,7 +27,7 @@
 		<div class="col-xs-6 col-sm-3"> 
 			<div style="position: relative; left: 0; top: 0;">
 				<img src="/assets/mobile_portrait.png" style="position: relative; top: 0; left: 0;"/>
-				<img src="/assets/pop_screenscast.gif" style="position: absolute; top: 35px; left: 35px; width=434;height=618"/>
+				<img src="/assets/pop_screenscast.gif" style="position: absolute; top: 40px; left: 35px; width=434;height=618"/>
 			</div>
 		</div>
 	</div>
