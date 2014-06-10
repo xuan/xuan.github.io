@@ -45,9 +45,9 @@
           <a href="/" title="Home">Raspberry</a>
 
           
-              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+              &nbsp;&nbsp;&nbsp;<small><a href="/support">Support</a></small>
           
-              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+              &nbsp;&nbsp;&nbsp;<small><a href="/blog">Blog</a></small>
           
               &nbsp;&nbsp;&nbsp;<small><a href="/atom.xml">Feed</a></small>
           
@@ -55,163 +55,8 @@
         </h3>
       </div>
 
-      <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/03/31/animate-pie-chart/">
-        IOS - Animating a Pie Chart using CALayer
-      </a>
-    </h1>
-
-    <span class="post-date">31 Mar 2014</span>
-
-    <p><img src="/assets/pie.png" alt="Pie Coordinates"></p>
-
-<h2>Drawing a half circle using CGContextAddArc</h2>
-
-<p><code>XNCircleLayer.m:</code></p>
-<div class="highlight"><pre><code class="objc language-objc" data-lang="objc"><span class="cp">#import &quot;XNCircleLayer.h&quot;</span>
-
-<span class="k">@implementation</span> <span class="nc">XNCircleLayer</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="n">XNCircleLayer</span><span class="o">*</span><span class="p">)</span> <span class="nf">init</span> <span class="p">{</span>
-    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//scale to correct for blurriness in retina</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">contentsScale</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIScreen</span> <span class="n">mainScreen</span><span class="p">]</span> <span class="n">scale</span><span class="p">];</span>
-        <span class="c1">//display circle</span>
-        <span class="p">[</span><span class="n">self</span> <span class="n">setNeedsDisplay</span><span class="p">];</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">drawInContext:</span><span class="p">(</span><span class="n">CGContextRef</span><span class="p">)</span><span class="nv">ctx</span> <span class="p">{</span>
-    <span class="c1">//get the circle bounds</span>
-    <span class="n">CGRect</span> <span class="n">rect</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">bounds</span><span class="p">;</span>
-    <span class="c1">//radius will be the size of half the layers bounds so entire</span>
-    <span class="c1">//circle can fit inside the display bounds.</span>
-    <span class="n">CGFloat</span> <span class="n">radius</span> <span class="o">=</span> <span class="n">CGRectGetMidX</span><span class="p">(</span><span class="n">rect</span><span class="p">);</span>
-
-    <span class="c1">//first move to the center of the rect before drawing the arc</span>
-        <span class="n">CGContextMoveToPoint</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">CGRectGetMidX</span><span class="p">(</span><span class="n">rect</span><span class="p">),</span> <span class="n">CGRectGetMidY</span><span class="p">(</span><span class="n">rect</span><span class="p">));</span>
-    <span class="c1">//draw the arc starting from the top (-M_PI_2) and </span>
-    <span class="c1">//end at bottom (M_PI_2)</span>
-    <span class="n">CGContextAddArc</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">CGRectGetMidX</span><span class="p">(</span><span class="n">rect</span><span class="p">),</span> <span class="n">CGRectGetMidY</span><span class="p">(</span><span class="n">rect</span><span class="p">),</span> <span class="n">radius</span><span class="p">,</span> <span class="o">-</span><span class="n">M_PI_2</span><span class="p">,</span> <span class="n">M_PI_2</span><span class="p">,</span> <span class="nb">NO</span><span class="p">);</span>
-    <span class="c1">//fill the half circle we just created</span>
-    <span class="n">CGContextFillPath</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-</code></pre></div>
-<p><code>XNViewController.m:</code></p>
-<div class="highlight"><pre><code class="objc language-objc" data-lang="objc"><span class="cp">#import &quot;XNViewController.h&quot;</span>
-<span class="cp">#import &quot;XNCircleLayer.h&quot;</span>
-
-<span class="k">@interface</span> <span class="nc">XNViewController</span> <span class="p">()</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">XNCircleLayer</span> <span class="o">*</span><span class="n">circle</span><span class="p">;</span>
-<span class="k">@end</span>
-
-<span class="k">@implementation</span> <span class="nc">XNViewController</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
-    <span class="c1">//Add our new Circle to the view</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">circle</span> <span class="o">=</span> <span class="p">[</span><span class="n">XNCircleLayer</span> <span class="n">new</span><span class="p">];</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">circle</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span> <span class="n">addSublayer</span><span class="o">:</span><span class="n">self</span><span class="p">.</span><span class="n">circle</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-</code></pre></div>
-<p><code>Output:</code></p>
-
-<p><img src="/assets/half_pie.png" alt="Pie Coordinates"></p>
-
-<h2>Animating our circle</h2>
-
-<p><code>XNCircleLayer.h:</code></p>
-<div class="highlight"><pre><code class="objc language-objc" data-lang="objc"><span class="cp">#import &lt;QuartzCore/QuartzCore.h&gt;</span>
-
-<span class="k">@interface</span> <span class="nc">XNCircleLayer</span> : <span class="nc">CAShapeLayer</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">float</span> <span class="n">endAngle</span><span class="p">;</span>
-<span class="k">@end</span>
-</code></pre></div>
-<p><code>XNCircleLayer.m:</code></p>
-<div class="highlight"><pre><code class="objc language-objc" data-lang="objc"><span class="k">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">needsDisplayForKey:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">key</span> <span class="p">{</span>
-    <span class="c1">//make sure that the key matches the @dynamic endAngle name</span>
-    <span class="k">if</span> <span class="p">([</span><span class="n">key</span> <span class="n">isEqualToString</span><span class="o">:</span><span class="s">@&quot;endAngle&quot;</span><span class="p">])</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">super</span> <span class="n">needsDisplayForKey</span><span class="o">:</span><span class="n">key</span><span class="p">];</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><code>XNCircleLayer.m:</code></p>
-<div class="highlight"><pre><code class="objc language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">actionForKey:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">key</span> <span class="p">{</span>
-    <span class="c1">// make sure that the key matches the @dynamic endAngle name</span>
-    <span class="k">if</span> <span class="p">([</span><span class="n">key</span> <span class="n">isEqualToString</span><span class="o">:</span><span class="s">@&quot;endAngle&quot;</span><span class="p">])</span> <span class="p">{</span>
-        <span class="c1">// Create a basic interpolation for &quot;endAngle&quot; animation</span>
-        <span class="n">CABasicAnimation</span> <span class="o">*</span><span class="n">animation</span> <span class="o">=</span> <span class="p">[</span><span class="n">CABasicAnimation</span>
-                                       <span class="nl">animationWithKeyPath:</span><span class="n">key</span><span class="p">];</span>
-        <span class="c1">// Animate the property</span>
-        <span class="n">animation</span><span class="p">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mf">0.3f</span><span class="p">;</span>
-        <span class="n">animation</span><span class="p">.</span><span class="n">timingFunction</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAMediaTimingFunction</span> <span class="n">functionWithName</span><span class="o">:</span><span class="n">kCAMediaTimingFunctionEaseOut</span><span class="p">];</span>
-        <span class="n">animation</span><span class="p">.</span><span class="n">fromValue</span> <span class="o">=</span> <span class="p">[[</span><span class="n">self</span> <span class="n">presentationLayer</span><span class="p">]</span> <span class="n">valueForKey</span><span class="o">:</span><span class="n">key</span><span class="p">];</span>
-        <span class="k">return</span> <span class="n">animation</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">super</span> <span class="n">actionForKey</span><span class="o">:</span><span class="n">key</span><span class="p">];</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><code>XNCircleLayer.m:</code></p>
-<div class="highlight"><pre><code class="objc language-objc" data-lang="objc"><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">drawInContext:</span><span class="p">(</span><span class="n">CGContextRef</span><span class="p">)</span><span class="nv">ctx</span> <span class="p">{</span>
-    <span class="c1">//get the circle bounds</span>
-    <span class="n">CGRect</span> <span class="n">rect</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">bounds</span><span class="p">;</span>
-    <span class="c1">//radius will be the size of half the layers bounds so entire</span>
-    <span class="c1">//circle can fit inside the display bounds.</span>
-    <span class="n">CGFloat</span> <span class="n">radius</span> <span class="o">=</span> <span class="n">CGRectGetMidX</span><span class="p">(</span><span class="n">rect</span><span class="p">);</span>
-
-    <span class="c1">//first move to the center of the rect before drawing the arc</span>
-    <span class="n">CGContextMoveToPoint</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">CGRectGetMidX</span><span class="p">(</span><span class="n">rect</span><span class="p">),</span> <span class="n">CGRectGetMidY</span><span class="p">(</span><span class="n">rect</span><span class="p">));</span>
-    <span class="c1">//draw the arc starting from the top (-M_PI_2) and end at endAngle</span>
-    <span class="n">CGContextAddArc</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">CGRectGetMidX</span><span class="p">(</span><span class="n">rect</span><span class="p">),</span> <span class="n">CGRectGetMidY</span><span class="p">(</span><span class="n">rect</span><span class="p">),</span> <span class="n">radius</span><span class="p">,</span> <span class="o">-</span><span class="n">M_PI_2</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">endAngle</span><span class="p">,</span> <span class="nb">NO</span><span class="p">);</span>
-    <span class="c1">//fill the half circle we just created</span>
-    <span class="n">CGContextFillPath</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><code>XNViewController.h:</code></p>
-<div class="highlight"><pre><code class="objc language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
-    <span class="c1">//Add our new Circle to the view</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">circle</span> <span class="o">=</span> <span class="p">[</span><span class="n">XNCircleLayer</span> <span class="n">new</span><span class="p">];</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">circle</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span> <span class="n">addSublayer</span><span class="o">:</span><span class="n">self</span><span class="p">.</span><span class="n">circle</span><span class="p">];</span>
-
-    <span class="n">self</span><span class="p">.</span><span class="n">circle</span><span class="p">.</span><span class="n">endAngle</span> <span class="o">=</span> <span class="n">M_PI_2</span><span class="p">;</span>
-    <span class="n">UIGestureRecognizer</span> <span class="o">*</span><span class="n">g</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UITapGestureRecognizer</span> <span class="n">alloc</span><span class="p">]</span>
-                              <span class="nl">initWithTarget:</span><span class="n">self</span>
-                              <span class="nl">action:</span><span class="k">@selector</span><span class="p">(</span><span class="n">tap</span><span class="o">:</span><span class="p">)];</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="n">addGestureRecognizer</span><span class="o">:</span><span class="n">g</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">tap:</span><span class="p">(</span><span class="n">UIGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="nv">recognizer</span> <span class="p">{</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">circle</span><span class="p">.</span><span class="n">endAngle</span> <span class="o">=</span> <span class="n">M_PI</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-  </div>
-  
-</div>
-
-<div class="pagination">
-  
-    <a class="pagination-item older" href="/page2">Older</a>
-  
-  
-    <span class="pagination-item newer">Newer</span>
-  
-</div>
+      <img src="/assets/logo.png"  style="width=210; height=110"/>
+<img src="/assets/pop_screenscast.gif" width="434" height="618" />
 
       <!-- Add Disqus comments. -->
 <div id="disqus_thread"></div>
@@ -235,6 +80,6 @@
         </p>
       </div>
     </div>
-
+    <script type="text/javascript" src="/public/retina.min.js"></script>
   </body>
 </html>

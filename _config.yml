@@ -25,6 +25,6 @@ github:
 
 
 pages_list:       
-  About: '/about'
-  Archive: '/archive'
+  Support: '/support'
+  Blog: '/blog'
   Feed: '/atom.xml'
