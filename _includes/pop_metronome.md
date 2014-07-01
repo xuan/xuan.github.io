@@ -17,9 +17,7 @@
 				<img src="/assets/logo.png"  style="width=196; height=110" class="pull-right"/>
 			</div>
 			<div class="row">
-			<button type="button" class="btn btn-primary btn-lg pull-right">
-  <span class="glyphicon glyphicon-download"></span> Download on the App Store
-</button>
+			    <a type="button" class="btn btn-primary btn-lg pull-right" href="https://itunes.apple.com/us/app/pop-metronome/id886690028" target="_blank">Download on the App Store</a>
 			</div>
 			
 			
